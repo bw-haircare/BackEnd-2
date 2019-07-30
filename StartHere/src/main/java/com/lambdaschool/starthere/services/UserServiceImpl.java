@@ -71,13 +71,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
-
-        ArrayList<UserRoles> newRoles = new ArrayList<>();
-        for (UserRoles ur : user.getUserRoles())
-        {
-            newRoles.add(new UserRoles(newUser, ur.getRole()));
-        }
-        newUser.setUserRoles(newRoles);
+        newUser.setFirst_name(user.getFirst_name());
+        newUser.setLast_name(user.getLast_name());
+        newUser.setEmail(user.getEmail());
 
         for (Image q : user.getImages())
         {
@@ -109,18 +105,16 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     currentUser.setPasswordNoEncrypt(user.getPassword());
                 }
 
-                if (user.getUserRoles().size() > 0)
-                {
-                    // with so many relationships happening, I decided to go
-                    // with old school queries
-                    // delete the old ones
-                    rolerepos.deleteUserRolesByUserId(currentUser.getUserid());
+                if(user.getFirst_name() != null) {
+                    currentUser.setFirst_name(user.getFirst_name());
+                }
 
-                    // add the new ones
-                    for (UserRoles ur : user.getUserRoles())
-                    {
-                        rolerepos.insertUserRoles(id, ur.getRole().getRoleid());
-                    }
+                if(user.getLast_name() != null) {
+                    currentUser.setLast_name(user.getLast_name());
+                }
+
+                if(user.getEmail() != null) {
+                    currentUser.setEmail(user.getEmail());
                 }
 
                 if (user.getImages().size() > 0)
