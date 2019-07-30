@@ -5,50 +5,50 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Images")
-public class Image extends Auditable
+@Table(name = "quotes")
+public class Quote extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Imagesid;
+    private long quotesid;
 
     @Column(nullable = false)
-    private String Image;
+    private String quote;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
                 nullable = false)
-    @JsonIgnoreProperties({"Images", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"quotes", "hibernateLazyInitializer"})
     private User user;
 
-    public Image()
+    public Quote()
     {
     }
 
-    public Image(String Image, User user)
+    public Quote(String quote, User user)
     {
-        this.Image = Image;
+        this.quote = quote;
         this.user = user;
     }
 
-    public long getImagesid()
+    public long getQuotesid()
     {
-        return Imagesid;
+        return quotesid;
     }
 
-    public void setImagesid(long Imagesid)
+    public void setQuotesid(long quotesid)
     {
-        this.Imagesid = Imagesid;
+        this.quotesid = quotesid;
     }
 
-    public String getImage()
+    public String getQuote()
     {
-        return Image;
+        return quote;
     }
 
-    public void setImage(String Image)
+    public void setQuote(String quote)
     {
-        this.Image = Image;
+        this.quote = quote;
     }
 
     public User getUser()

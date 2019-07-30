@@ -1,7 +1,7 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
-import com.lambdaschool.starthere.models.Image;
+import com.lambdaschool.starthere.models.Quote;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.UserRoles;
 import com.lambdaschool.starthere.repository.RoleRepository;
@@ -71,13 +71,17 @@ public class UserServiceImpl implements UserDetailsService, UserService
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
-        newUser.setFirst_name(user.getFirst_name());
-        newUser.setLast_name(user.getLast_name());
-        newUser.setEmail(user.getEmail());
 
-        for (Image q : user.getImages())
+        ArrayList<UserRoles> newRoles = new ArrayList<>();
+        for (UserRoles ur : user.getUserRoles())
         {
-            newUser.getImages().add(new Image(q.getImage(), newUser));
+            newRoles.add(new UserRoles(newUser, ur.getRole()));
+        }
+        newUser.setUserRoles(newRoles);
+
+        for (Quote q : user.getQuotes())
+        {
+            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -105,23 +109,25 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     currentUser.setPasswordNoEncrypt(user.getPassword());
                 }
 
-                if(user.getFirst_name() != null) {
-                    currentUser.setFirst_name(user.getFirst_name());
-                }
-
-                if(user.getLast_name() != null) {
-                    currentUser.setLast_name(user.getLast_name());
-                }
-
-                if(user.getEmail() != null) {
-                    currentUser.setEmail(user.getEmail());
-                }
-
-                if (user.getImages().size() > 0)
+                if (user.getUserRoles().size() > 0)
                 {
-                    for (Image q : user.getImages())
+                    // with so many relationships happening, I decided to go
+                    // with old school queries
+                    // delete the old ones
+                    rolerepos.deleteUserRolesByUserId(currentUser.getUserid());
+
+                    // add the new ones
+                    for (UserRoles ur : user.getUserRoles())
                     {
-                        currentUser.getImages().add(new Image(q.getImage(), currentUser));
+                        rolerepos.insertUserRoles(id, ur.getRole().getRoleid());
+                    }
+                }
+
+                if (user.getQuotes().size() > 0)
+                {
+                    for (Quote q : user.getQuotes())
+                    {
+                        currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
                     }
                 }
 

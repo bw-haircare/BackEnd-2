@@ -82,7 +82,7 @@ public class UserControllerIntegrationTest
         // String stringU1 = mapper.writeValueAsString(u1);
         // System.out.println(stringU1);
 
-        String stringU1 = "{\"userid\":0,\"username\":\"snoopy\",\"password\":\"password\",\"userRoles\":[],\"Images\":[],\"authority\":[]}";
+        String stringU1 = "{\"userid\":0,\"username\":\"snoopy\",\"password\":\"password\",\"userRoles\":[],\"quotes\":[],\"authority\":[]}";
 
         given().contentType("application/json").body(stringU1)
                 .when()

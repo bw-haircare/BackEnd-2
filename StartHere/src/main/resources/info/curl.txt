@@ -20,7 +20,7 @@ curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d781956f-32c
 
 curl -X POST -H "Content-Type: application/json" -d "{\"username\": \"Ginger\", \"password\": \"EATEATEAT\"}" http://localhost:2019/createnewuser
 
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer d781956f-32c1-46c3-a531-dc8f64466f7b" -d "{ \"username\": \"Snoopy\", \"password\": \"password\", \"userRoles\": [ { \"role\": { \"roleid\": 1 } } ], \"Images\": [ { \"Image\": \"The Red Baron\" } ]}" http://localhost:2019/users/user
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer d781956f-32c1-46c3-a531-dc8f64466f7b" -d "{ \"username\": \"Snoopy\", \"password\": \"password\", \"userRoles\": [ { \"role\": { \"roleid\": 1 } } ], \"quotes\": [ { \"quote\": \"The Red Baron\" } ]}" http://localhost:2019/users/user
 
 curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d781956f-32c1-46c3-a531-dc8f64466f7b" http://localhost:2019/users/user/15
 
