@@ -1,8 +1,10 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.Quote;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuoteService
 {
@@ -15,4 +17,8 @@ public interface QuoteService
     void delete(long id);
 
     Quote save(Quote quote);
+
+    Quote saveQuote(MultipartFile quoteFile, Long userId);
+
+
 }

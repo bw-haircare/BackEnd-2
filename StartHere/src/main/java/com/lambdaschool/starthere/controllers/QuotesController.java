@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,21 +64,24 @@ public class QuotesController
     }
 
 
-    @PostMapping(value = "/quote")
-    public ResponseEntity<?> addNewQuote(HttpServletRequest request, @Valid
+    @PostMapping(value = "/quote/user/{userid}")
+    public ResponseEntity<?> addNewQuote(HttpServletRequest request, @RequestParam MultipartFile quoteFile, @PathVariable String userId, @Valid
     @RequestBody
             Quote newQuote) throws URISyntaxException
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+        Long id = Long.valueOf(userId);
 
-        newQuote = quoteService.save(newQuote);
+        quoteService.saveQuote(quoteFile, id);
+
+       //  newQuote = quoteService.save(newQuote);
 
         // set the location header for the newly created resource
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newQuoteURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{quoteid}").buildAndExpand(newQuote.getQuotesid()).toUri();
-        responseHeaders.setLocation(newQuoteURI);
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newQuoteURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{quoteid}").buildAndExpand(newQuote.getQuotesid()).toUri();
+//        responseHeaders.setLocation(newQuoteURI);
 
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
 
