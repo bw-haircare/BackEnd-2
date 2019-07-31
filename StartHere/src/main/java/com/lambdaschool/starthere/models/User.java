@@ -2,6 +2,7 @@ package com.lambdaschool.starthere.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.mapping.Join;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -37,6 +38,10 @@ public class User extends Auditable
                orphanRemoval = true)
     @JsonIgnoreProperties("user")
     private List<image> images = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "profile", joinColumns = {@JoinColumn(name = "userid", referencedColumnName = "userid")}, inverseJoinColumns = {@JoinColumn(name = "profileid", referencedColumnName = "profileid")})
+    private Profile profile;
 
     public User()
     {
@@ -120,5 +125,13 @@ public class User extends Auditable
         }
 
         return rtnList;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }
