@@ -1,9 +1,6 @@
 package com.lambdaschool.starthere;
 
-import com.lambdaschool.starthere.models.image;
-import com.lambdaschool.starthere.models.Role;
-import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.models.UserRoles;
+import com.lambdaschool.starthere.models.*;
 import com.lambdaschool.starthere.services.ProfileService;
 import com.lambdaschool.starthere.services.RoleService;
 import com.lambdaschool.starthere.services.UserService;
@@ -39,12 +36,15 @@ public class SeedData implements CommandLineRunner
         roleService.save(r2);
         roleService.save(r3);
 
+        Profile p1 = new Profile("Rushi", "Arumalla", "rushi44@gmail.com");
+
         // admin, data, user
         ArrayList<UserRoles> admins = new ArrayList<>();
         admins.add(new UserRoles(new User(), r1));
         admins.add(new UserRoles(new User(), r2));
         admins.add(new UserRoles(new User(), r3));
         User u1 = new User("admin", "password",  admins);
+        u1.setProfile(p1);
 //        u1.getimages().add(new image("A creative man is motivated by the desire to achieve, not by the desire to beat others", u1));
 //        u1.getimages().add(new image("The question isn't who is going to let me; it's who is going to stop me.", u1));
         userService.save(u1);
@@ -54,12 +54,14 @@ public class SeedData implements CommandLineRunner
         datas.add(new UserRoles(new User(), r3));
         datas.add(new UserRoles(new User(), r2));
         User u2 = new User("cinnamon", "1234567", datas);
+        u2.setProfile(p1);
         userService.save(u2);
 
         // user
         ArrayList<UserRoles> users = new ArrayList<>();
         users.add(new UserRoles(new User(), r2));
         User u3 = new User("barnbarn", "ILuvM4th!", users);
+        u3.setProfile(p1);
 //        u3.getimages().add(new image("Live long and prosper", u3));
 //        u3.getimages().add(new image("The enemy of my enemy is the enemy I kill last", u3));
 //        u3.getimages().add(new image("Beam me up", u3));
@@ -74,5 +76,7 @@ public class SeedData implements CommandLineRunner
         users.add(new UserRoles(new User(), r2));
         User u5 = new User("Jane", "password", users);
         userService.save(u5);
+
+
     }
 }

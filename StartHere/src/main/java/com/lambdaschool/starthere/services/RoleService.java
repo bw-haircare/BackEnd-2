@@ -1,9 +1,11 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.Role;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface RoleService
 {
     List<Role> findAll();
