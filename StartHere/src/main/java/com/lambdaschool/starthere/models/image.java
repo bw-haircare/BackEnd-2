@@ -5,29 +5,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "quotes")
-public class Quote extends Auditable
+@Table(name = "images")
+public class image extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long quotesid;
+    private long imagesid;
 
     private String fileName;
     private String fileType;
 
     @Lob
-    private byte quote;
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid",
                 nullable = false)
-    @JsonIgnoreProperties({"quotes", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties({"images", "hibernateLazyInitializer"})
     private User user;
 
-    public Quote(String fileName, String fileType, byte[] quote, User user) {
+    public image(String fileName, String fileType, byte[] image, User user) {
         this.fileName = fileName;
         this.fileType = fileType;
-        this.quote = quote;
+        this.image = image;
         this.user = user;
     }
 
@@ -47,24 +47,24 @@ public class Quote extends Auditable
         this.fileType = fileType;
     }
 
-    public long getQuotesid()
+    public long getimagesid()
     {
-        return quotesid;
+        return imagesid;
     }
 
-    public void setQuotesid(long quotesid)
+    public void setimagesid(long imagesid)
     {
-        this.quotesid = quotesid;
+        this.imagesid = imagesid;
     }
 
-    public byte getQuote()
+    public byte[] getimage()
     {
-        return quote;
+        return image;
     }
 
-    public void setQuote(byte quote)
+    public void setimage(byte[] image)
     {
-        this.quote = quote;
+        this.image = image;
     }
 
     public User getUser()

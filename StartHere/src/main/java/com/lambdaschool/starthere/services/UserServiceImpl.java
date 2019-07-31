@@ -1,7 +1,7 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
-import com.lambdaschool.starthere.models.Quote;
+import com.lambdaschool.starthere.models.image;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.models.UserRoles;
 import com.lambdaschool.starthere.repository.RoleRepository;
@@ -71,6 +71,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
+//        newUser.setFirst_name(user.getFirst_name());
+//        newUser.setLast_name(user.getLast_name());
+//        newUser.setEmail(user.getEmail());
 
         ArrayList<UserRoles> newRoles = new ArrayList<>();
         for (UserRoles ur : user.getUserRoles())
@@ -79,9 +82,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
         newUser.setUserRoles(newRoles);
 
-        for (Quote q : user.getQuotes())
+        for (image q : user.getimages())
         {
-            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
+            newUser.getimages().add(new image(q.getFileName(), q.getFileName(), q.getimage(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -97,7 +100,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         if (currentUser != null)
         {
-            if (id == currentUser.getUserid())
+            if (id == currentUser.getuserid())
             {
                 if (user.getUsername() != null)
                 {
@@ -109,12 +112,13 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     currentUser.setPasswordNoEncrypt(user.getPassword());
                 }
 
+
                 if (user.getUserRoles().size() > 0)
                 {
                     // with so many relationships happening, I decided to go
                     // with old school queries
                     // delete the old ones
-                    rolerepos.deleteUserRolesByUserId(currentUser.getUserid());
+                    rolerepos.deleteUserRolesByuserid(currentUser.getuserid());
 
                     // add the new ones
                     for (UserRoles ur : user.getUserRoles())
@@ -123,11 +127,11 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     }
                 }
 
-                if (user.getQuotes().size() > 0)
+                if (user.getimages().size() > 0)
                 {
-                    for (Quote q : user.getQuotes())
+                    for (image q : user.getimages())
                     {
-                        currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
+                        currentUser.getimages().add(new image(q.getFileName(), q.getFileName(), q.getimage(), currentUser));
                     }
                 }
 

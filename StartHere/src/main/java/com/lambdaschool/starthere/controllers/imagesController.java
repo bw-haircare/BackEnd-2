@@ -1,7 +1,7 @@
 package com.lambdaschool.starthere.controllers;
 
-import com.lambdaschool.starthere.models.Quote;
-import com.lambdaschool.starthere.services.QuoteService;
+import com.lambdaschool.starthere.models.image;
+import com.lambdaschool.starthere.services.imageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,80 +19,80 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/quotes")
-public class QuotesController
+@RequestMapping("/images")
+public class imagesController
 {
     private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
 
     @Autowired
-    QuoteService quoteService;
+    imageService imageService;
 
-    @GetMapping(value = "/quotes",
+    @GetMapping(value = "/images",
                 produces = {"application/json"})
-    public ResponseEntity<?> listAllQuotes(HttpServletRequest request)
+    public ResponseEntity<?> listAllimages(HttpServletRequest request)
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        List<Quote> allQuotes = quoteService.findAll();
-        return new ResponseEntity<>(allQuotes, HttpStatus.OK);
+        List<image> allimages = imageService.findAll();
+        return new ResponseEntity<>(allimages, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/quote/{quoteId}",
+    @GetMapping(value = "/image/{imageId}",
                 produces = {"application/json"})
-    public ResponseEntity<?> getQuote(HttpServletRequest request,
+    public ResponseEntity<?> getimage(HttpServletRequest request,
                                       @PathVariable
-                                              Long quoteId)
+                                              Long imageId)
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        Quote q = quoteService.findQuoteById(quoteId);
+        image q = imageService.findimageById(imageId);
         return new ResponseEntity<>(q, HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/username/{userName}",
                 produces = {"application/json"})
-    public ResponseEntity<?> findQuoteByUserName(HttpServletRequest request,
+    public ResponseEntity<?> findimageByUserName(HttpServletRequest request,
                                                  @PathVariable
                                                          String userName)
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        List<Quote> theQuotes = quoteService.findByUserName(userName);
-        return new ResponseEntity<>(theQuotes, HttpStatus.OK);
+        List<image> theimages = imageService.findByUserName(userName);
+        return new ResponseEntity<>(theimages, HttpStatus.OK);
     }
 
 
-    @PostMapping(value = "/quote/user/{userid}")
-    public ResponseEntity<?> addNewQuote(HttpServletRequest request, @RequestParam MultipartFile quoteFile, @PathVariable String userId, @Valid
+    @PostMapping(value = "/image/user/{userid}")
+    public ResponseEntity<?> addNewimage(HttpServletRequest request, @RequestParam MultipartFile imageFile, @PathVariable String userid, @Valid
     @RequestBody
-            Quote newQuote) throws URISyntaxException
+            image newimage) throws URISyntaxException
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
-        Long id = Long.valueOf(userId);
+        Long id = Long.valueOf(userid);
 
-        quoteService.saveQuote(quoteFile, id);
+        imageService.saveimage(imageFile, id);
 
-       //  newQuote = quoteService.save(newQuote);
+       //  newimage = imageService.save(newimage);
 
         // set the location header for the newly created resource
 //        HttpHeaders responseHeaders = new HttpHeaders();
-//        URI newQuoteURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{quoteid}").buildAndExpand(newQuote.getQuotesid()).toUri();
-//        responseHeaders.setLocation(newQuoteURI);
+//        URI newimageURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{imageid}").buildAndExpand(newimage.getimagesid()).toUri();
+//        responseHeaders.setLocation(newimageURI);
 
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
 
-    @DeleteMapping("/quote/{id}")
-    public ResponseEntity<?> deleteQuoteById(HttpServletRequest request,
+    @DeleteMapping("/image/{id}")
+    public ResponseEntity<?> deleteimageById(HttpServletRequest request,
                                              @PathVariable
                                                      long id)
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        quoteService.delete(id);
+        imageService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,9 +1,9 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
-import com.lambdaschool.starthere.models.Quote;
+import com.lambdaschool.starthere.models.image;
 import com.lambdaschool.starthere.models.User;
-import com.lambdaschool.starthere.repository.QuoteRepository;
+import com.lambdaschool.starthere.repository.imageRepository;
 import com.lambdaschool.starthere.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,38 +18,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service(value = "quoteService")
-public class QuoteServiceImpl implements QuoteService
+@Service(value = "imageService")
+public class imageServiceImpl implements imageService
 {
     @Autowired
-    private QuoteRepository quoterepos;
+    private imageRepository imagerepos;
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public List<Quote> findAll()
+    public List<image> findAll()
     {
-        List<Quote> list = new ArrayList<>();
-        quoterepos.findAll().iterator().forEachRemaining(list::add);
+        List<image> list = new ArrayList<>();
+        imagerepos.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
     @Override
-    public Quote findQuoteById(long id)
+    public image findimageById(long id)
     {
-        return quoterepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+        return imagerepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
     }
 
     @Override
     public void delete(long id)
     {
-        if (quoterepos.findById(id).isPresent())
+        if (imagerepos.findById(id).isPresent())
         {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (quoterepos.findById(id).get().getUser().getUsername().equalsIgnoreCase(authentication.getName()))
+            if (imagerepos.findById(id).get().getUser().getUsername().equalsIgnoreCase(authentication.getName()))
             {
-                quoterepos.deleteById(id);
+                imagerepos.deleteById(id);
             } else
             {
                 throw new ResourceNotFoundException(id + " " + authentication.getName());
@@ -62,18 +62,18 @@ public class QuoteServiceImpl implements QuoteService
 
     @Transactional
     @Override
-    public Quote save(Quote quote)
+    public image save(image image)
     {
-        return quoterepos.save(quote);
+        return imagerepos.save(image);
     }
 
     @Override
-    public Quote saveQuote(MultipartFile quoteFile, Long userId) {
-        String quoteFileName = StringUtils.cleanPath((quoteFile.getOriginalFilename()));
-        User user = userRepository.findByUserId(userId);
+    public image saveimage(MultipartFile imageFile, Long userid) {
+        String imageFileName = StringUtils.cleanPath((imageFile.getOriginalFilename()));
+        User user = userRepository.findByuserid(userid);
         try {
-            Quote quote = new Quote(quoteFileName, quoteFile.getContentType(), quoteFile.getBytes(), user);
-            quoterepos.save(quote);
+            image image = new image(imageFileName, imageFile.getContentType(), imageFile.getBytes(), user);
+            imagerepos.save(image);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,10 +83,10 @@ public class QuoteServiceImpl implements QuoteService
 
 
     @Override
-    public List<Quote> findByUserName(String username)
+    public List<image> findByUserName(String username)
     {
-        List<Quote> list = new ArrayList<>();
-        quoterepos.findAll().iterator().forEachRemaining(list::add);
+        List<image> list = new ArrayList<>();
+        imagerepos.findAll().iterator().forEachRemaining(list::add);
 
         list.removeIf(q -> !q.getUser().getUsername().equalsIgnoreCase(username));
         return list;
