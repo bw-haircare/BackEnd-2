@@ -43,7 +43,6 @@ public class ProfileController {
 
         profile = profileService.save(profile, userid);
         newUser.setProfile(profile);
-        userService.save(newUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

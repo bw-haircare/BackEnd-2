@@ -66,7 +66,7 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.springframework.boot" level="INFO">
+    <logger name="org.springframework" level="INFO">
         <appender-ref ref="STDOUT"/>
     </logger>
 
