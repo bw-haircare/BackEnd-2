@@ -46,7 +46,6 @@ public class DataSourceConfig
     }
 
     @Bean(name = "jdbcCustom")
-
     @Autowired
     public JdbcTemplate jdbcTemplate(
             @Qualifier("dsCustom")

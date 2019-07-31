@@ -40,9 +40,7 @@ public class imagesController
 
     @GetMapping(value = "/image/{imageId}",
                 produces = {"application/json"})
-    public ResponseEntity<?> getimage(HttpServletRequest request,
-                                      @PathVariable
-                                              Long imageId)
+    public ResponseEntity<?> getimage(HttpServletRequest request, @PathVariable Long imageId)
     {
         logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
 
