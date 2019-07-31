@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,5 +146,14 @@ public class UserServiceImpl implements UserDetailsService, UserService
             throw new ResourceNotFoundException(authentication.getName());
         }
 
+    }
+
+    @Override
+    public User findByUserName(String username) {
+        User user = userrepos.findByUsername(username);
+        if(user == null) {
+            throw new EntityNotFoundException("Invalid User");
+        }
+        return user;
     }
 }

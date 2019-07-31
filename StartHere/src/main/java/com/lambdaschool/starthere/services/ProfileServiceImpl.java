@@ -64,6 +64,6 @@ public class ProfileServiceImpl implements ProfileService{
         if(profile.getEmail() != null) {
             currentProfile.setEmail(profile.getEmail());
         }
-        return profileRepos.save(currentProfile); 
+        return profileRepos.save(currentProfile);
     }
 }
