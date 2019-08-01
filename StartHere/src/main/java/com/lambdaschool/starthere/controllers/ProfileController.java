@@ -5,6 +5,9 @@ import com.lambdaschool.starthere.models.Profile;
 import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.services.ProfileService;
 import com.lambdaschool.starthere.services.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,17 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+
+    @ApiOperation(value = "Return all Profiles", response = Profile.class, responseContainer = "List")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", dataType = "integr", paramType = "query",
+                    value = "Results page you want to retrieve (0..N)"),
+            @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query",
+                    value = "Number of records per page."),
+            @ApiImplicitParam(name = "sort", allowMultiple = true, dataType = "string", paramType = "query",
+                    value = "Sorting criteria in the format: property(,asc|desc). " +
+                            "Default sort order is ascending. " +
+                            "Multiple sort criteria are supported.")})
 
     @GetMapping(value = "/profiles", produces = {"application/json"})
     public ResponseEntity<?> getListOfAllProfiles() {
