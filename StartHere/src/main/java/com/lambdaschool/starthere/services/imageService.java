@@ -20,5 +20,4 @@ public interface imageService
 
     image saveimage(MultipartFile imageFile, Long userid);
 
-
 }
