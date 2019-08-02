@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static junit.framework.TestCase.assertEquals;
 
 
 @RunWith(SpringRunner.class)
@@ -62,6 +63,7 @@ class ProfileControllerTest {
 //        u1.setProfile(p1);
         u1.setuserid(1);
         usersList.add(u1);
+        p1.setProfileid(1);
         profileList.add(p1); 
 
     }
@@ -73,14 +75,16 @@ class ProfileControllerTest {
     @Test
     void createProfile() throws Exception {
         String apiUrl = "/profiles/newprofile";
-        Mockito.when(profileService.save((new Profile("Rushi", "A", "haghsg@hgj.com")), 1)).thenReturn(usersList.get(1));
+        Mockito.when(profileService.save((new Profile("Rushi", "A", "haghsg@hgj.com")), 1)).thenReturn(profileList.get(2));
 
         RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
         MvcResult r = mockMvc.perform(rb).andReturn();
         String tr = r.getResponse().getContentAsString();
 
         ObjectMapper mapper = new ObjectMapper();
-        String er = mapper.writeValueAsString(usersList.get(1));
+        String er = mapper.writeValueAsString(profileList.get(1));
+
+        assertEquals("RestAPI Returns List", er, tr);
 
 
 

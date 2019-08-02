@@ -70,15 +70,7 @@ public class imagesController
         List<image> theimages = imageService.findByUserName(userName);
         return new ResponseEntity<>(theimages, HttpStatus.OK);
     }
-
-//    @PostMapping(value = "/authuser/newimage")
-//    public ResponseEntity addNewImageToUser(@RequestBody image image, @Valid Authentication authentication) {
-//        User newUser = userService.findByUserName(authentication.getName());
-//        long userid = newUser.getuserid();
-//        image = imageService.save(image, userid);
-//        newUser.setimages(image);
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
+    
 
     @PostMapping(value = "/image/user/{userid}")
     public ResponseEntity<?> addNewimage(HttpServletRequest request, @RequestParam MultipartFile imageFile, @PathVariable String userid, @Valid
@@ -89,12 +81,6 @@ public class imagesController
 
         imageService.saveimage(imageFile, id);
 
-       //  newimage = imageService.save(newimage);
-
-        // set the location header for the newly created resource
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        URI newimageURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{imageid}").buildAndExpand(newimage.getimagesid()).toUri();
-//        responseHeaders.setLocation(newimageURI);
 
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
