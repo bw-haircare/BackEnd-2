@@ -1,12 +1,14 @@
 HairCare Backend
 
-- [ ] Create Class Objects
-- [ ] Create Repos
-- [ ] Create Services/Impl
-- [ ] Create Controllers
-- [ ] Create Endpoints
-- [ ] Create Testing Data
-- [ ] Add OAuth2
-- [ ] Swagger.io
-- [ ] Exception Handling
-- [ ] Deploy to Heroku
+This Backend Enables Front-End users to send Profile Data and Images.  Stylists can login and update their info so potential customers can take a look at their previous work.
+
+- [x] Create Class Objects
+- [x] Create Repos
+- [x] Create Services/Impl
+- [x] Create Controllers
+- [x] Create Endpoints
+- [x] Exception Handling
+- [x] Create Testing Data
+- [x] Add OAuth2
+- [x] Image Upload
+- [x] Deploy to Heroku
